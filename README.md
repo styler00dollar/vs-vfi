@@ -1,6 +1,8 @@
 # vs-vfi
 Using video frame interpolation models with vapoursynth. You can pipe the output directly into mpv or render it.
 
+This repo uses a lot of code from [HolyWu/vs-rife](https://github.com/HolyWu/vs-rife).
+
 ## Install vapoursynth
 ```
 sudo apt install yasm python3.9 python3.9-venv python3.9-dev

@@ -21,7 +21,7 @@ sudo ln -s /usr/local/lib/python3.9/site-packages/vapoursynth.so /usr/lib/python
 pip install vapoursynth
 sudo apt install ffmsindex libffms2-4 libffms2-dev
 ```
-Find `libffms2.so` (you can use `sudo find /home -name "libffms2.so"`) and add it's path to `inference.py`.
+Just in case your `libffms2.so` path is different from mine, find it with `sudo find /home -name "libffms2.so"` and add it's path to `inference.py`.
 ```
 core.std.LoadPlugin(path='/usr/lib/x86_64-linux-gnu/libffms2.so')
 ```

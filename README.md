@@ -23,7 +23,7 @@ core.std.LoadPlugin(path='/usr/lib/x86_64-linux-gnu/libffms2.so')
 ```
 
 ## Usage
-Modify stuff like resize dimension, fp16 and model within `ìnference.py`. 
+Modify stuff like input filename, resize dimension, fp16 and model within `ìnference.py`. 
 
 Watching video with mpv: (requires `sudo apt install mpv`)
 ```

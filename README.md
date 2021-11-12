@@ -44,3 +44,7 @@ Rendering with x264: (requires `sudo apt install x264`)
 ```
 vspipe --y4m inference.py - | x264 - --demuxer y4m -o example.mkv
 ```
+Rendering with ffmpeg:
+```
+vspipe --y4m inference.py - | ffmpeg -i pipe: example.mkv
+```

@@ -8,6 +8,7 @@ import numpy as np
 import torch
 import vapoursynth as vs
 from torch.nn import functional as F
+import kornia
 
 core = vs.core
 vs_api_below4 = vs.__api_version__.api_major < 4
@@ -50,7 +51,14 @@ def video_model(clip: vs.VideoNode,fp16: bool = False) -> vs.VideoNode:
 
         I0 = frame_to_tensor(f[0]).to("cuda", non_blocking=True)
         I1 = frame_to_tensor(f[1]).to("cuda", non_blocking=True)
+
+        I0 = kornia.color.yuv.rgb_to_yuv(I0)
+        I1 = kornia.color.yuv.rgb_to_yuv(I1)
+
         middle = model(I0, I1)
+
+        middle = kornia.color.yuv.yuv_to_rgb(middle)
+
         return tensor_to_frame(middle[:, :, :h, :w], f[0])
     return clip0.std.ModifyFrame(clips=[clip0, clip1], selector=rife)
 
@@ -71,7 +79,7 @@ def tensor_to_frame(t: torch.Tensor, f: vs.VideoFrame) -> vs.VideoFrame:
 import vapoursynth as vs
 core = vs.core
 core.std.LoadPlugin(path='/usr/lib/x86_64-linux-gnu/libffms2.so')
-clip = core.ffms2.Source(source='example.webm')
+clip = core.ffms2.Source(source='input.webm')
 #clip = vs.core.resize.Bicubic(clip, format=vs.RGBS, matrix_in_s='709')
 # resizing for more performance
 clip = vs.core.resize.Bicubic(clip, width=848, height=480, format=vs.RGBS, matrix_in_s='709')

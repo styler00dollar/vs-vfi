@@ -19,6 +19,7 @@ cd ..
 sudo ldconfig
 sudo ln -s /usr/local/lib/python3.9/site-packages/vapoursynth.so /usr/lib/python3.9/lib-dynload/vapoursynth.so
 pip install vapoursynth
+sudo apt install ffmsindex libffms2-4 libffms2-dev
 ```
 Find `libffms2.so` (you can use `sudo find /home -name "libffms2.so"`) and add it's path to `inference.py`.
 ```

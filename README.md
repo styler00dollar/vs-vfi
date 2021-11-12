@@ -6,6 +6,13 @@ This repo uses a lot of code from [HolyWu/vs-rife](https://github.com/HolyWu/vs-
 ## Install vapoursynth
 ```
 sudo apt install yasm python3.9 python3.9-venv python3.9-dev
+git clone https://github.com/sekrit-twc/zimg.git
+cd zimg
+./autogen.sh
+./configure
+make -j4
+sudo make install
+cd ..
 pip install Cython
 git clone https://github.com/vapoursynth/vapoursynth.git
 cd vapoursynth

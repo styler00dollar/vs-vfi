@@ -78,6 +78,7 @@ def tensor_to_frame(t: torch.Tensor, f: vs.VideoFrame) -> vs.VideoFrame:
 
 import vapoursynth as vs
 core = vs.core
+core.num_threads = 16
 core.std.LoadPlugin(path='/usr/lib/x86_64-linux-gnu/libffms2.so')
 clip = core.ffms2.Source(source='input.webm')
 #clip = vs.core.resize.Bicubic(clip, format=vs.RGBS, matrix_in_s='709')

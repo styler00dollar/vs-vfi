@@ -3,7 +3,6 @@
 # hacky script to make batch processing with audio and subtitle support
 # make sure tmp_dir is also set in inference.py
 # maybe should pass arguments instead of a text file instead
-
 import glob
 import os
 
@@ -38,7 +37,7 @@ for f in files:
     # muxing audio and subtitles into video
     os.system(f"ffmpeg -i {f} -map 0:s:0 {subs_path}")
     os.system(f"ffmpeg -i {f} -vn -acodec copy {audio_path}")
-    os.system(f"ffmpeg -i {tmp_path} -i subs.srt -c:s mov_text -i audio.ogg -c copy {out_path}")
+    os.system(f"ffmpeg -i {tmp_path} -i {subs_path} -c:s mov_text -i {audio_path} -c copy {out_path}")
 
     # deleting temp files
     os.remove(tmp_path)

@@ -6,9 +6,9 @@
 import glob
 import os
 
-input_dir = "input/"
+input_dir = "/home/input/"
 tmp_dir = "tmp/"
-output_dir = "output/"
+output_dir = "/home/output/"
 files = glob.glob(input_dir + '/**/*.mkv', recursive=True)
 files.sort()
 
@@ -22,8 +22,7 @@ for f in files:
     # paths
     txt_path = os.path.join(tmp_dir, "tmp.txt")
     subs_path = os.path.join(tmp_dir, "subs.srt")
-    audio_path = os.path.join(tmp_dir, "audio.ogg")
-    tmp_path = os.path.join(tmp_dir, os.path.splitext(os.path.basename(f))[0] + "_tmp.mkv")
+    audio_path = os.path.join(tmp_dir, "audio.ogg") # ogg, aac
     out_path = os.path.join(output_dir, os.path.splitext(os.path.basename(f))[0] + "_mux.mkv")
 
     # writing filepath into temp txt
@@ -33,14 +32,11 @@ for f in files:
     f_txt.close()
 
     # calling vspipe and piping into ffmpeg
-    os.system(f"vspipe --y4m inference.py - | ffmpeg -i pipe: {tmp_path}")
-    # muxing audio and subtitles into video
-    os.system(f"ffmpeg -i {f} -map 0:s:0 {subs_path}")
     os.system(f"ffmpeg -i {f} -vn -acodec copy {audio_path}")
-    os.system(f"ffmpeg -i {tmp_path} -i {subs_path} -c:s mov_text -i {audio_path} -c copy {out_path}")
+    os.system(f"ffmpeg -i {f} -map 0:s:0 {subs_path}")
+    os.system(f"vspipe --y4m inference.py - | ffmpeg -i {subs_path} -c:s mov_text -i pipe: {out_path} -i {audio_path} -c copy ")
 
     # deleting temp files
-    os.remove(tmp_path)
     os.remove(txt_path)
     os.remove(subs_path)
     os.remove(audio_path)

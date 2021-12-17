@@ -38,13 +38,13 @@ Modify stuff like input filename, resize dimension, fp16 and model within `ìnfe
 
 Watching video with mpv: (requires `sudo apt install mpv`)
 ```
-vspipe --y4m inference.vpy - | mpv -
+vspipe -c y4m inference.py - | mpv -
 ```
 Rendering with x264: (requires `sudo apt install x264`)
 ```
-vspipe --y4m inference.py - | x264 - --demuxer y4m -o example.mkv
+vspipe -c y4m inference.py - | x264 - --demuxer y4m -o example.mkv
 ```
 Rendering with ffmpeg:
 ```
-vspipe --y4m inference.py - | ffmpeg -i pipe: example.mkv
+vspipe -c y4m inference.py - | ffmpeg -i pipe: example.mkv
 ```

@@ -45,16 +45,17 @@ def video_model(clip: vs.VideoNode,fp16: bool = False) -> vs.VideoNode:
     def rife(n: int, f: vs.VideoFrame) -> vs.VideoFrame:
         if not (n & 1) or n == clip0.num_frames - 1 or f[0].props.get('_SceneChangeNext'):
             return f[0]
-        if fp16:
-            I0 = I0.half()
-            I1 = I1.half()
 
         I0 = frame_to_tensor(f[0]).to("cuda", non_blocking=True)
         I1 = frame_to_tensor(f[1]).to("cuda", non_blocking=True)
 
         I0 = kornia.color.yuv.rgb_to_yuv(I0)
         I1 = kornia.color.yuv.rgb_to_yuv(I1)
-
+        
+        if fp16:
+            I0 = I0.half()
+            I1 = I1.half()
+        
         middle = model(I0, I1)
 
         middle = kornia.color.yuv.yuv_to_rgb(middle)
